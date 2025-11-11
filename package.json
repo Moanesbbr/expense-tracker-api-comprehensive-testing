@@ -8,6 +8,10 @@
     "test:watch": "jest --watch",
     "test:unit": "jest tests/unit",
     "test:api": "jest tests/api",
+    "test:performance": "jest tests/performance",
+    "test:load": "jest tests/load",
+    "test:security": "jest tests/security",
+    "test:non-functional": "jest tests/performance tests/load tests/security",
     "test:postman": "newman run tests/postman/ExpenseTracker.postman_collection.json",
     "start": "nodemon app.js"
   },
@@ -17,6 +21,7 @@
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
+    "ejs": "^3.1.10",
     "express": "^4.18.2",
     "express-async-errors": "^3.1.1",
     "jsonwebtoken": "^9.0.2",
@@ -27,7 +32,7 @@
   },
   "devDependencies": {
     "jest": "^29.7.0",
-    "supertest": "^6.3.3",
-    "newman": "^6.0.0"
+    "newman": "^6.0.0",
+    "supertest": "^6.3.3"
   }
 }
