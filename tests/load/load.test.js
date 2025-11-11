@@ -1,3 +1,8 @@
+// Mock emailManager to prevent actual email sending during tests
+jest.mock('../../managers/emailManager', () => {
+  return jest.fn().mockResolvedValue(true);
+});
+
 /**
  * Load and Stress Tests
  * Tests de charge et stress : vérification des performances en conditions réelles et en pic de trafic
@@ -17,6 +22,13 @@ describe('Load and Stress Tests', () => {
   const CONCURRENT_USERS_NORMAL = 10;
   const CONCURRENT_USERS_HIGH = 50;
   const CONCURRENT_USERS_STRESS = 100;
+
+  // Ensure JWT secret is set for tests
+  beforeAll(() => {
+    if (!process.env.jwt_salt) {
+      process.env.jwt_salt = 'test_jwt_secret_key_for_load_tests';
+    }
+  });
 
   beforeAll(async () => {
     // Créer plusieurs utilisateurs pour les tests de charge

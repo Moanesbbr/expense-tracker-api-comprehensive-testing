@@ -1,3 +1,8 @@
+// Mock emailManager to prevent actual email sending during tests
+jest.mock('../../managers/emailManager', () => {
+  return jest.fn().mockResolvedValue(true);
+});
+
 /**
  * Performance Tests
  * Tests non fonctionnels : performance, temps de réponse, débit
@@ -17,6 +22,11 @@ describe('Performance Tests', () => {
   const MAX_RESPONSE_TIME_CRITICAL = 500; // 500ms pour les endpoints critiques
 
   beforeAll(async () => {
+    // Ensure JWT secret is set for tests
+    if (!process.env.jwt_salt) {
+      process.env.jwt_salt = 'test_jwt_secret_key_for_performance_tests';
+    }
+
     // Créer un utilisateur de test pour les tests authentifiés
     const userData = {
       name: 'Performance Test User',

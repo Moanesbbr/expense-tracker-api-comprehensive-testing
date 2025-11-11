@@ -1,4 +1,10 @@
 jest.setTimeout(20000);
+
+// Mock emailManager to prevent actual email sending during tests
+jest.mock('../../managers/emailManager', () => {
+  return jest.fn().mockResolvedValue(true);
+});
+
 /**
  * API Integration Tests
  * Black-box testing approach using Supertest
@@ -14,6 +20,13 @@ describe('API Integration Tests', () => {
   let authToken;
   let userId;
   let transactionId;
+
+  // Ensure JWT secret is set for tests
+  beforeAll(() => {
+    if (!process.env.jwt_salt) {
+      process.env.jwt_salt = 'test_jwt_secret_key_for_integration_tests';
+    }
+  });
 
   describe('User Registration', () => {
     test('POST /api/users/register - Should register user successfully', async () => {

@@ -1,4 +1,10 @@
 jest.setTimeout(20000);
+
+// Mock emailManager to prevent actual email sending during tests
+jest.mock('../../managers/emailManager', () => {
+  return jest.fn().mockResolvedValue(true);
+});
+
 /**
  * Security Tests
  * Tests non fonctionnels : sécurité approfondie
@@ -20,6 +26,11 @@ describe('Security Tests', () => {
   let userId;
 
   beforeAll(async () => {
+    // Ensure JWT secret is set for tests
+    if (!process.env.jwt_salt) {
+      process.env.jwt_salt = 'test_jwt_secret_key_for_security_tests';
+    }
+
     // Créer un utilisateur de test
     const userData = {
       name: 'Security Test User',
