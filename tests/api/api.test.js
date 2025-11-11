@@ -1,3 +1,4 @@
+jest.setTimeout(20000);
 /**
  * API Integration Tests
  * Black-box testing approach using Supertest

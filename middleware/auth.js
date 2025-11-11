@@ -9,6 +9,16 @@ const auth = (req, res, next) => {
 
   //7 we gonna show our custom error and not invalid token
   try {
+    // Check if the Authorization header exists and starts with 'Bearer '
+    if (
+      !req.headers.authorization ||
+      !req.headers.authorization.startsWith("Bearer ")
+    ) {
+      return res.status(401).json({
+        status: "failed",
+        message: "Unauthorized!",
+      });
+    }
     //5 the token provided by the client, its in header, in POSTMAN we go to Auth and bearer Token and we put key there, and here we can take it
     //8 must be inside try if somehow we don't send an auth, No Auth in type instead of Bearer, and replace doesn't work on undefined so it will throw an exception
     const accessToken = req.headers.authorization.replace("Bearer ", "");

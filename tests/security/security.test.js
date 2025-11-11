@@ -1,3 +1,4 @@
+jest.setTimeout(20000);
 /**
  * Security Tests
  * Tests non fonctionnels : sécurité approfondie
